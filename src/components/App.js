@@ -20,8 +20,21 @@ const App = () => {
     webiste: "",
   });
 
-  const handleOnClick = () => {};
-
+const handleOnClick = () => {
+    setIsLoading(LoadingStatus.IN_PROGRESS);
+    setTimeout(() => {
+      fetch(`${BASE_URL}/${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setUserData(data);
+          setIsLoading(LoadingStatus.SUCCESS);
+        })
+        .catch((error) => {
+          console.log("Error fetching user:", error);
+          setIsLoading(LoadingStatus.NOT_STARTED);
+        });
+    }, 2000);
+  };
   const onChangeHandler = (event) => {
     setUserId(event.target.value);
   };
